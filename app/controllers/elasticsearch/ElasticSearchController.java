@@ -322,7 +322,10 @@ public class ElasticSearchController extends Controller {
 				qb.must(QueryBuilders.matchAllQuery());
 			} else {
 				// FIXME Currently we search in all fields and ignore searchFields
-				qb.must(wildcardQuery("_all", "*" + search + "*"));
+                                String[] sq = search.split(" ");
+				for(int i=0; i<sq.length; i++) {
+				  qb.must(wildcardQuery("_all", "*" + sq[i] + "*"));
+				}
 			}
 			
 			return qb;
